@@ -1,0 +1,21 @@
+{
+  "properties": [
+    {
+      "name": "spring.kafka-encryption.enabled",
+      "type": "java.lang.Boolean",
+      "description": "flag to enable encryption",
+      "defaultValue": "true"
+    },
+    {
+      "name": "spring.kafka-encryption.allow-missing-topic-configuration",
+      "type": "java.lang.Boolean",
+      "description": "flag to enable whitelisting of topics",
+      "defaultValue": "false"
+    },
+    {
+      "name": "spring.kafka-encryption.topics",
+      "type": "java.util.Map",
+      "description": "map topic-name to password"
+    }
+  ]
+}
