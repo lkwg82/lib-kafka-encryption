@@ -48,7 +48,6 @@ public class EncryptSerializerTest {
             fail("must fail");
         } catch (SerializationException e) {
             String message = e.getMessage();
-            // TODO
             assertThat(message)
                     .contains("property " + "topics.topic3 should be set");
         }
