@@ -1,6 +1,7 @@
 # kafka-encryption lib
 
- [![Build Status](https://travis-ci.org/idealo/lib-kafka-encryption.svg?branch=master)](https://travis-ci.org/idealo/logback-redis)
+ [![Build Status](https://travis-ci.org/idealo/lib-kafka-encryption.svg?branch=master)](https://travis-ci.org/idealo/lib-kafka-encryption)
+ [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.idealo.kafka/kafka-encryption/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22de.idealo.kafka%22) 
 
 ## description
 This is a lightweight library for symmetric encryption when using kafka. It is implemented by replacing the default value (de)serializer.
