@@ -39,9 +39,9 @@ import lombok.RequiredArgsConstructor;
         properties = {
                 "spring.kafka.consumer.group-id=test",
                 "spring.kafka.consumer.auto-offset-reset=earliest",
-                "spring.kafka-encryption.topics.topic1=pass",
-                "spring.kafka-encryption.topics.topic2=pass2",
-                "spring.kafka-encryption.topics.dead_letter_queue=pass3",
+                "spring.kafka-encryption.topicPasswords.topic1=pass",
+                "spring.kafka-encryption.topicPasswords.topic2=pass2",
+                "spring.kafka-encryption.topicPasswords.dead_letter_queue=pass3",
         })
 @TestPropertySource(locations = "classpath:test.properties")
 public class KafkaIT {

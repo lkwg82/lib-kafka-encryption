@@ -49,7 +49,7 @@ public class EncryptSerializerTest {
         } catch (SerializationException e) {
             String message = e.getMessage();
             assertThat(message)
-                    .contains("property " + "topics.topic3 should be set");
+                    .contains("property " + "topicPasswords.topic3 should be set");
         }
     }
 

@@ -41,7 +41,7 @@ public class DecryptDeserializer implements Deserializer<String> {
             return new Crypter(password).decrypt(cipherText);
         } else {
             throw new SerializationException("KAFKA-ENCRYPTION: missing configuration for topic " + topic + " - property "
-                    + "topics." + topic
+                    + "topicPasswords." + topic
                     + " should be set with <password> as value");
 
         }

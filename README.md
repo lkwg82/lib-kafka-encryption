@@ -11,9 +11,9 @@ Inspired by https://blog.codecentric.de/en/2016/10/transparent-end-end-security-
 ## usage
 
 ```xml
-<dependency> 
+ <dependency>
     <groupId>de.idealo.kafka</groupId>
-    <artifactId>kafka-encryption</artifactId>
+    <artifactId>spring-boot-starter-kafka-encryption</artifactId>
     <version>LATEST</version>
 </dependency>
 ```
@@ -23,9 +23,8 @@ application.yml
 spring:
   kafka-encryption:
 #     enabled: false (default:true)
-     topics:
-        subscriber-events: geheimes-passwort
-        register-events: geheimes-passwort2
+     topic-passwords:
+        test-topic: password
 ```
 
 output when missed config

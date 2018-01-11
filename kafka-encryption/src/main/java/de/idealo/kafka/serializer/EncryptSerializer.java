@@ -37,7 +37,7 @@ public class EncryptSerializer implements Serializer<String> {
             return data.getBytes(UTF_8);
         }
         throw new SerializationException("KAFKA-ENCRYPTION: missing configuration for " + topic + " - property "
-                + "topics." + topic + " should be set with <password> as value");
+                + "topicPasswords." + topic + " should be set with <password> as value");
     }
 
     private String encryptAndWrap(String data, String pass) {

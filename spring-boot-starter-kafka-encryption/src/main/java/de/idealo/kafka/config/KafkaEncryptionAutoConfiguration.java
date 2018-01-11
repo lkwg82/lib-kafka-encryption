@@ -39,7 +39,7 @@ public class KafkaEncryptionAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(DecryptDeserializer.class)
     DecryptDeserializer decryptDeserializer(ConsumerFactory<String, String> consumerFactory, KafkaEncryptionProperties properties) {
-        DecryptDeserializer decryptDeserializer = new DecryptDeserializer(properties.getTopics());
+        DecryptDeserializer decryptDeserializer = new DecryptDeserializer(properties.getTopicPasswords());
         setValueDeserializer(consumerFactory, decryptDeserializer);
 
         return decryptDeserializer;
@@ -48,7 +48,7 @@ public class KafkaEncryptionAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(EncryptSerializer.class)
     EncryptSerializer encryptSerializer(ProducerFactory<String, String> producerFactory, KafkaEncryptionProperties properties) {
-        Map<String, String> topics = properties.getTopics();
+        Map<String, String> topics = properties.getTopicPasswords();
         boolean allowMissingTopicConfiguration = properties.isAllowMissingTopicConfiguration();
         EncryptSerializer serializer = new EncryptSerializer(topics, allowMissingTopicConfiguration);
 
@@ -105,7 +105,7 @@ public class KafkaEncryptionAutoConfiguration {
     @EventListener
     public void checkOnMissingConfiguration(ApplicationReadyEvent event) {
         if (!properties.isAllowMissingTopicConfiguration()) {
-            if (properties.getTopics().isEmpty()) {
+            if (properties.getTopicPasswords().isEmpty()) {
                 String message = "KAFKA-ENCRYPTION no password(s) for encryption configured";
 
                 log.error("* -------------------------------------------------------------- *");

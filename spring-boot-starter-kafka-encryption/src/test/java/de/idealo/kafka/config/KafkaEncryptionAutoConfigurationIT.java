@@ -78,7 +78,7 @@ public class KafkaEncryptionAutoConfigurationIT {
 
     @Test
     public void shouldNotFailToStartWhenConfigIsPresent() {
-        environment.set("spring.kafka-encryption.topics.topic1", "obscure-password");
+        environment.set("spring.kafka-encryption.topicPasswords.topic1", "obscure-password");
 
         val context = new AnnotationConfigApplicationContext(DefaultConfig.class);
 

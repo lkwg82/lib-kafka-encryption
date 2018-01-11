@@ -42,7 +42,7 @@ public class DecryptDeserializerTest {
             fail("should fail");
         } catch (SerializationException e) {
             Assertions.assertThat(e.getMessage())
-                      .contains("property " + "topics.any should be set");
+                      .contains("property " + "topicPasswords.any should be set");
         }
     }
 }

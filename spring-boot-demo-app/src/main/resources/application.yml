@@ -2,3 +2,6 @@ spring:
   kafka:
     consumer:
       group-id: test-id
+  kafka-encryption:
+    topic-passwords:
+      test-topic: password

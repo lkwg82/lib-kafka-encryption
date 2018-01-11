@@ -15,7 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import lombok.SneakyThrows;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(properties = "spring.kafka-encryption.topics.test-topic=password")
+@SpringBootTest(properties = {
+        "spring.kafka.consumer.auto-offset-reset=earliest"
+})
 public class DemoAppIT {
 
     @ClassRule

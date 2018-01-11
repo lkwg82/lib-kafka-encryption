@@ -15,7 +15,7 @@ public class KafkaEncryptionProperties {
     /**
      * map topic-name to password
      */
-    private Map<String, String> topics = new HashMap<>();
+    private Map<String, String> topicPasswords = new HashMap<>();
 
     /**
      * flag to enable encryption
@@ -23,7 +23,7 @@ public class KafkaEncryptionProperties {
     private boolean enabled = true;
 
     /**
-     * flag to enable whitelisting of topics
+     * flag to enable whitelisting of topicPasswords
      */
     private boolean allowMissingTopicConfiguration;
 }
