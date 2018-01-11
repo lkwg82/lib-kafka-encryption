@@ -12,8 +12,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class KafkaEncryptionProperties {
-
+    /**
+     * map topic-name to password
+     */
     private Map<String, String> topics = new HashMap<>();
+
+    /**
+     * flag to enable encryption
+     */
     private boolean enabled = true;
+
+    /**
+     * flag to enable whitelisting of topics
+     */
     private boolean allowMissingTopicConfiguration;
 }

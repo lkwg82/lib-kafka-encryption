@@ -1,17 +1,21 @@
 package de.idealo.kafka.config;
 
+import java.util.Comparator;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.apache.kafka.common.serialization.Serializer;
 import org.springframework.boot.autoconfigure.condition.AllNestedConditions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ApplicationListener;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.ContextStartedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -29,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableConfigurationProperties(KafkaEncryptionProperties.class)
 @Conditional(KafkaEncryptionAutoConfiguration.Condition.class)
 @RequiredArgsConstructor
-public class KafkaEncryptionAutoConfiguration implements ApplicationListener<ContextStartedEvent> {
+public class KafkaEncryptionAutoConfiguration {
     private final KafkaEncryptionProperties properties;
 
     @Bean
@@ -69,11 +73,38 @@ public class KafkaEncryptionAutoConfiguration implements ApplicationListener<Con
         }
     }
 
-    @Override
-    public void onApplicationEvent(ContextStartedEvent event) {
-        if (properties.isAllowMissingTopicConfiguration()) {
-            // ok
-        } else {
+    @EventListener
+    public void checkOnMultipleValueSerializer(ApplicationReadyEvent event) {
+        ApplicationContext context = event.getApplicationContext();
+        Map<String, Serializer> serializerMap = context.getBeansOfType(Serializer.class);
+        if (serializerMap.size() > 1) {
+            String canonicalName = EncryptSerializer.class.getCanonicalName();
+            String message = "KAFKA-ENCRYPTION detected multiple value-serializer, only accepts exactly one derived from " + canonicalName;
+
+            String serializersList = serializerMap.entrySet().stream()
+                                                  .sorted(Comparator.comparing(Map.Entry::getKey))
+                                                  .map(entry -> "\tserializer '" + entry
+                                                          .getKey() + "' of type '" + entry
+                                                          .getValue()
+                                                          .getClass()
+                                                          .getCanonicalName() + "'")
+                                                  .collect(Collectors.joining("\n"));
+
+            log.error("* -------------------------------------------------------------- *");
+            log.error("");
+            log.error(message);
+            log.error("");
+            log.error("found \n" + serializersList);
+            log.error("");
+            log.error("* -------------------------------------------------------------- *");
+
+            throw new IllegalStateException(message);
+        }
+    }
+
+    @EventListener
+    public void checkOnMissingConfiguration(ApplicationReadyEvent event) {
+        if (!properties.isAllowMissingTopicConfiguration()) {
             if (properties.getTopics().isEmpty()) {
                 String message = "KAFKA-ENCRYPTION no password(s) for encryption configured";
 
