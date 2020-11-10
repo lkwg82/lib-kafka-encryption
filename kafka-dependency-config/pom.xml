@@ -24,7 +24,7 @@
 
 
         <kafka.version>1.0.0</kafka.version>
-        <zookeeper.version>3.4.10</zookeeper.version>
+        <zookeeper.version>3.4.14</zookeeper.version>
     </properties>
 
     <dependencyManagement>
